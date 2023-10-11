@@ -1,10 +1,4 @@
-import mitt from 'mitt';
-
-const emitter = mitt();
-
-window.addEventListener('popstate', () => {
-    emitter.emit('navigate');
-})
+import { createRouter, createWebHistory } from 'vue-router';
 
 const DunkirkBlurb = {
     name: 'dunkirk-blurb',
@@ -61,76 +55,36 @@ const routes = [
     {
         path: '/the-dark-knight-rises',
         component: TheDarkKnightRisesBlurb
+    },
+    {
+        path: '/:pathName(.*)*',
+        component: {
+            name: 'not-found-blurb',
+            template: /*html*/ `<h2>Not found :(. Pick a movie from the list!</h2>`
+        }
     }
 ];
 
-const View = {
-    name: 'router-view',
-    template: /*html*/ `<component :is="currentView"></component>`,
-    data(){
-        return {
-            currentView: {},
-        };
-    },
-    created(){
-        if(this.getRouteObject() === undefined){
-            this.currentView = {
-                template: /*html*/ `<h2>Not found :(. Pick a movie from the list!</h2>`
-            };
-        }
-        else{
-            this.currentView = this.getRouteObject().component;
-        }
-        emitter.on('navigate', () => {
-            this.currentView = this.getRouteObject().component;
-        })
-    },
-    methods: {
-        getRouteObject(){
-            return routes.find(
-                (route) => route.path === window.location.pathname
-            );
-        }
-    }
-};
-
-const Link = {
-    name: 'router-link',
-    props: {
-        to: {
-            type: String,
-            required: true,
-        },
-    },
-    template: /*html*/ `<a @click="navigate" :href="to">{{ to }}</a>`,
-    methods: {
-        navigate(evt){
-            evt.preventDefault();
-            window.history.pushState(null, null, this.to);
-            emitter.emit('navigate');
-        }
-    }
-};
-
 const App = {
     name: 'App',
-    components: {
-        'router-view': View,
-        'router-link': Link
-    },
     template: /*html*/
         `
             <div id="app">
                 <div class="movies">
                     <h2>Which movies?</h2>
-                    <router-link to="/dunkirk"></router-link>
-                    <router-link to="/interstellar"></router-link>
-                    <router-link to="/the-dark-knight-rises"></router-link>
+                    <router-link to="/dunkirk">/dunkirk</router-link>
+                    <router-link to="/interstellar">/interstellar</router-link>
+                    <router-link to="/the-dark-knight-rises">/the-dark-knight-rises</router-link>
 
                     <router-view></router-view>
                 </div>
             </div>
         `
 };
+
+export const router = createRouter({
+    history: createWebHistory(),
+    routes,
+});
 
 export default App;
