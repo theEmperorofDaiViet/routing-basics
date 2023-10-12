@@ -80,6 +80,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 # Key Features
++ <code>v1.0.0</code>: build a basic router from scratch
++ <code>v2.0.0</code>: using <b>vue-router</b>
+
 - Render a specified component based on the app’s location.
 - Check to display a ‘Not Found’ template if the URL pathname doesn’t match any path existing in the routes array.
 - Navigation links that will change the location of the browser without making a web request.
@@ -88,6 +91,11 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 # Usage
+
+<p align="center">
+    <img src="public/images/examples/example-1.png" width="1050">
+    <img src="public/images/examples/example-2.png" width="1050">
+</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
